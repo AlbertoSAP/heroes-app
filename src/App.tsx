@@ -1,15 +1,12 @@
-import { useHeroe } from './Hook/UseHeroe';
-import Card from './component/Card';
+import Heroes from "./component/Heroes";
+import Router from "./routes/root";
+
 
 const App = () => {
-  const {state} = useHeroe()
+
   return (
-    <>
-    <div className='container mt-5' >
-    <Card img={''}/>
-    </div>
-    </>
+   <Router/>
   );
-}
+};
 
 export default App;

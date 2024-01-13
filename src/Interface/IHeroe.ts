@@ -21,7 +21,7 @@ export interface Powerstats {
 }
 
 export interface Biography {
-  "full-name": string
+  "full-name" : string 
   "alter-egos": string
   aliases: string[]
   "place-of-birth": string

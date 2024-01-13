@@ -3,27 +3,33 @@ import { ApiUrlConfig } from "../api/ApiUrlConfig"
 import { Heroes } from "../Interface/IHeroe"
 import { IResponseHeroe } from "../Interface/IResponseHeroe"
 
-export const useHeroe = (searchParam:string='batman') => {
- 
-    const [state, setState] = useState<Heroes>([])
+export const useHeroe = () => {
+    // state heroes
+  const [state, setState] = useState<Heroes>([]);
+  // search
+  const [search, setSearch] = useState<string>("a");
 
-    const fetchHeroes = async () => {
-        try {
-         const {data} = (await ApiUrlConfig.get(`search/${searchParam}`)) as IResponseHeroe
-         setState(data.results )
-        } catch (error) {
-        console.error(error);
-        }
+  const fetchHeroes = async () => {
+    try {
+      const { data } = (await ApiUrlConfig.get(
+        `search/${search}`
+      )) as IResponseHeroe;
+      setState((!!data.results) ? data.results : [] );
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    useEffect(() => {
-        fetchHeroes()
-    }, [])
-    
-    console.log(state);
-    
+  useEffect(() => {
+    fetchHeroes();
+  }, [search]);
 
-return {state}
+  console.log(state);
+
+  return { 
+    state,
+    setSearch
+ };
 }
 
 
