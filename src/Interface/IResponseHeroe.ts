@@ -1,4 +1,4 @@
-import { Heroes } from "./IHeroe"
+import { Heroe, Heroes } from "./IHeroe"
 
 export interface IResponseHeroe {
     data: Data
@@ -16,4 +16,13 @@ export interface IResponseHeroe {
   }
 
   export interface Config {
+  }
+
+  export interface IResponseOneHeroe {
+    data: Heroe
+    status: number
+    statusText: string
+    headers: Headers
+    config: Config
+    request: Request
   }

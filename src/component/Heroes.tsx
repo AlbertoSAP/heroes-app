@@ -1,59 +1,96 @@
-import React, { useState } from 'react'
-import { useHeroe } from '../Hook/UseHeroe';
-import Card from './Card';
+import React, { useState } from "react";
+import { useHeroe } from "../Hook/UseHeroe";
+import Card from "./Card";
+import NotFound from "./NotFound";
+import { ComicsEnum } from "../Enums/ComicsEnum";
 
 const Heroes = () => {
+  const { state, setSearch } = useHeroe();
+  const [inputSearch, setInputSearch] = useState("");
+  const search = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setSearch(inputSearch);
+  };
 
-    const { state, setSearch } = useHeroe();
-    const [inputSearch, setInputSearch] = useState("");
-    const search = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.preventDefault();
-      console.log("click");
-      setSearch(inputSearch);
+  const bageConfig = (publisher: string) => {
+    publisher = publisher
+      .replace("Comics", "")
+      .replace("- Heroes", "")
+      .replace(" ", "");
+
+    const stylebages = {
+      bageStyle: "",
+      bageText: publisher,
     };
-  
-    // if(state.length === 0){
-    //   return <NotFound/>
-    // }
+
+    switch (publisher) {
+      case ComicsEnum.DC:
+        return { ...stylebages, bageStyle: "bg-primary" };
+      case ComicsEnum.IMAGE:
+        return { ...stylebages, bageStyle: "bg-dark" };
+      default:
+        return { ...stylebages, bageStyle: "bg-danger" };
+    }
+  };
+  // if(state.length === 0){
+  //   return <NotFound/>
+  // }
 
   return (
     <>
-    <div className="mx-3 mt-5">
-      <div className="form-group mb-5">
-        <label className="mb-2" htmlFor="inputSearch">
-          Search
-        </label>
-        <input
-          value={inputSearch}
-          onChange={(e) => setInputSearch(e.target.value)}
-          id="inputSearch"
-          className="form-control w-25"
-          type="text"
-        />
+      <div
+        style={{ display: state.length > 0 ? "block" : "none" }}>
+        <div className="form-group mb-5">
+          <label className="mb-2" htmlFor="inputSearch">
+            Search
+          </label>
+          <input
+            key={'inputSearch'}
+            value={inputSearch}
+            onChange={(e) => setInputSearch(e.target.value)}
+            id="inputSearch"
+            className="form-control w-25"
+            type="text"
+          />
 
-        <button onClick={(e) => search(e)} className="btn btn-success mt-2">
-          Search
-        </button>
+          <button onClick={(e) => search(e)} className="btn btn-success mt-2">
+            Search
+          </button>
+        </div>
+
+        {/* start card  */}
+        <div className="row">
+          {state.map(({ id, image, name, biography }) => {
+            return (
+              <>
+                <div
+                  className={
+                    state.length < 4 ? "col-md-3  mx-1" : "col  mx-1 mb-2"
+                  }
+                >
+                  <Card
+                    key={`superheroe${id}`}
+                    img={image.url}
+                    title={name}
+                    moreInformationUlr={`/heroe/${id}`}
+                    bage={bageConfig(biography.publisher)}
+                  />
+                </div>
+              </>
+            );
+          })}
+        </div>
+        {/* end Card */}
       </div>
-
-      {/* start card  */}
-      <div className="row">
-        {state.map(({ id, image }) => {
-          return (
-            <>
-              <div
-                className={state.length < 4 ? "col-md-3  mx-1" : "col  mx-1"}
-              >
-                <Card key={`superheroe${id}`} img={image.url} />
-              </div>
-            </>
-          );
-        })}
+      <div
+        style={{
+          display: state.length === 0 ? "block" : "none",
+        }}
+      >
+        <NotFound key={'pageNotFound'} actionHandler={() => setSearch("a")} />
       </div>
-      {/* end Card */}
-    </div>
-  </>
-  )
-}
+    </>
+  );
+};
 
-export default Heroes
+export default Heroes;

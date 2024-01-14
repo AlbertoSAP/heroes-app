@@ -5,7 +5,9 @@ import Router from "./routes/root";
 const App = () => {
 
   return (
-   <Router/>
+    <div className="mx-3 mt-5">
+      <Router/>
+    </div>
   );
 };
 
