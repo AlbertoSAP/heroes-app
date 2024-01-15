@@ -1,14 +1,8 @@
-import Heroes from "./component/Heroes";
+import NavBar from "./component/NavBar";
 import Router from "./routes/root";
 
-
 const App = () => {
-
-  return (
-    <div className="mx-3 mt-5">
-      <Router/>
-    </div>
-  );
+  return (<Router />);
 };
 
 export default App;

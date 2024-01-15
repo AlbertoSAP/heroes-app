@@ -48,7 +48,7 @@ const HeroeDetails = () => {
                 height={400}
                 src={heroe.image.url}
                 className="card-img-top"
-                alt="..."
+                alt="HeroeErrorNoImage"
               />
             </div>
             <div className="col">
@@ -56,6 +56,7 @@ const HeroeDetails = () => {
               <div className="form-group text-start mb-2">
                 <label className="ms-1 text-secondary"> Nombre </label>
                 <input
+                 key={'fullnameInput'}
                   className="form-control border-top-0 bg-transparent"
                   value={fullName}
                   disabled
@@ -66,6 +67,7 @@ const HeroeDetails = () => {
                   <div className="form-group text-start">
                     <label className="ms-1 text-secondary"> Bando </label>
                     <input
+                    key={`BandoInput`}
                       className="form-control border-top-0 bg-transparent"
                       value={alignment}
                       disabled
@@ -84,18 +86,20 @@ const HeroeDetails = () => {
                 </div>
               </div>
               <h4 className="mt-3">Super poderes</h4>
-             
-              <div style={{
-                 display:' grid',
-              }}>
-                {
-                 Object.entries(powerstats).map(([key,value])=>{
-                  return (<div >
-                  <SuperPowers key={`heroeDetails${id}`} powerName={key} power={value}/> 
-                  </div>)
-                 })
-                }
-              </div>
+              {/* render super powers  */}
+              
+              {
+              Object.entries(powerstats).map(([key,value])=>{
+                return <SuperPowers
+                key={`${key}00`}
+                powerName={key}
+                power={value}
+                />
+              })
+                
+              }
+        
+              {/* render super powers  */}
             </div>
           </div>
 

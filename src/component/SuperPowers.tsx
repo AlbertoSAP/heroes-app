@@ -9,7 +9,10 @@ const SuperPowers:React.FC<SuperPowerProps> = ({
     power,
     powerName
 }) => {
-let bgColor = ''
+
+  power = !!(power.replace('null','')) ? power : '0'
+  
+    let bgColor = ''
     if(+power < 20){
      bgColor= 'bg-danger'
     }
@@ -24,39 +27,57 @@ let bgColor = ''
        }
 
   return (
-    <div>
-    <label style={{
-        display:'flex',
-        width:'18%',
-        textAlign:'left'
-    }} >{powerName}:</label>
-              <div
-              className={bgColor}
-                style={{
-                  marginTop: "7px",
-                  display: "flex",
-                  height: "14px",
-                  width: `${power}%`,
-                  justifyContent: "center",
-                  marginLeft: "3px",
-                  flexDirection:'row',
-                  borderRadius:'0 100px 100px 0'
-                }}
-              >
-                <span
-                  style={{
-                    display: "flex",
-                    textAlign: "center",
-                    marginTop: "-4px",
-                    color:'white',
-                    fontWeight:'bold'
-                  }}
-                >
-                  {power}%
-                </span>
-              </div>
-  </div>
-  )
+    <>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <span
+        style={
+          {
+            display:'flex',
+            width:'7rem',
+            justifyContent:'start'
+          }
+        }
+        >{powerName}: </span>
+        <div
+        style={{
+          display:'flex',
+          width:'100%',
+          marginTop: "5px",
+          border:'solid 1px #c5b9b9',
+          background:'#c5b9b9',
+          borderRadius: "0 10px 10px 0",
+          height: "15px", 
+        }}
+        >
+        <div
+          className={bgColor}
+          style={{
+            
+            width: `${power}%`,
+            height: "15px",
+            borderRadius: "0 10px 10px 0",
+          }}
+        >
+          <div
+            style={{
+              display:'flex',
+              marginTop: "-5px",
+              color: "white",
+              justifyContent:'center',
+              marginLeft: +power > 0? '0' :'15px'
+            }}
+          >
+            {power}%
+          </div>
+        </div>
+</div>
+      </div>
+    </>
+  );
 }
 
 export default SuperPowers
